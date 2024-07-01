@@ -1,0 +1,94 @@
+<body>
+<div id="root"></div>
+<script src="https://www.unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://www.unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://www.unpkg.com/@babel/standalone@7.24.0/babel.js"></script>
+<script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+<style>
+    /*
+    Taken from the vanilla-tilt.js demo site:
+    https://micku7zu.github.io/vanilla-tilt.js/index.html
+    */
+    .tilt-root {
+        height: 150px;
+        background-color: red;
+        width: 200px;
+        background-image: -webkit-linear-gradient(
+                315deg,
+                #ff00ba 0%,
+                #fae713 100%
+        );
+        background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+        transform-style: preserve-3d;
+        will-change: transform;
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg)
+        scale3d(1, 1, 1);
+    }
+    .tilt-child {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translateZ(30px) translateX(-50%) translateY(-50%);
+        box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
+        background-color: white;
+    }
+    .totally-centered {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<script type="text/babel">
+    const rootElement = document.getElementById('root');
+    /* Your code in here */
+
+    function Tilt() {
+        console.log('%cTitle log', 'color: red');
+        const tiltRef = React.useRef();
+
+        React.useEffect(() => {
+            console.log('%cUseEffect', 'color: green');
+            const vanillaTiltOptions = {
+                max: 25,
+                speed: 400,
+                glare: true,
+                'max-glare': 0.5,
+            }
+
+            const tiltNode = tiltRef.current;
+            VanillaTilt.init(tiltNode, vanillaTiltOptions);
+        })
+
+        return (
+            <div ref={tiltRef} className="tilt-root">
+                <div className="tilt-child"></div>
+            </div>
+        )
+    }
+
+    function App() {
+        console.log('%cStartApp', 'color: white');
+        const [show, setShow] = React.useState(false);
+        React.useEffect(() => {
+            console.log('after App render', 'color: yellow');
+        })
+        return (
+            <>
+                <input
+                    type="checkbox"
+                    value={show}
+                    onClick={() => setShow(!show)} />
+                <label>show tilt</label>
+                {show ? <Tilt /> : null}
+            </>
+        )
+    }
+
+    /* End your code */
+    ReactDOM.render(<App />, rootElement);
+</script>
+</body>

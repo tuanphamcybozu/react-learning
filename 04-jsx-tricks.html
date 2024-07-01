@@ -1,0 +1,20 @@
+<body>
+<div id="root"></div>
+<script src="https://www.unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://www.unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://www.unpkg.com/@babel/standalone@7.24.0/babel.js"></script>
+<script type="text/babel">
+    const rootElement = document.getElementById('root');
+    const myClassName = 'container';
+    const myChildren = 'Hello, World!'
+    const element = <div className={myClassName}>{myChildren}</div>;
+    ReactDOM.render(element, rootElement);
+
+    const props = {
+        className: myClassName,
+        children: myChildren,
+    };
+    const element2 = <div {...props} />;
+    ReactDOM.render(element2, rootElement);
+</script>
+</body>
